@@ -11,7 +11,7 @@ import {
   AlertCircle,
   Info,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 import { format, addDays, startOfToday } from "date-fns";
 import { useLocation } from "react-router-dom";
 

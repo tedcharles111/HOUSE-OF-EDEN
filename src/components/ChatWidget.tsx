@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);

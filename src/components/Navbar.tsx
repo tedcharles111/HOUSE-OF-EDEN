@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Instagram, Facebook, Youtube } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 
 const NAV_LINKS = [
