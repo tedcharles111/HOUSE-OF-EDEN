@@ -41,13 +41,13 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary-gold rounded-full flex items-center justify-center text-white font-serif font-bold text-xl">
-              HE
-            </div>
-            <span className="font-serif font-bold text-2xl text-heading-brown tracking-tight">
-              House Of Eden
-            </span>
+          <Link to="/" className="flex items-center">
+            <img
+              src="https://freepressnews.com.ng/wp-content/uploads/2026/03/ChatGPT_Image_Mar_10__2026__03_58_07_PM-removebg-preview.png"
+              alt="House Of Eden Logo"
+              className="w-48 h-48 object-contain"
+              referrerPolicy="no-referrer"
+            />
           </Link>
 
           {/* Desktop Nav */}
