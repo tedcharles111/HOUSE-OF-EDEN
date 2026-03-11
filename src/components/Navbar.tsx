@@ -35,8 +35,8 @@ export function Navbar() {
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
         isScrolled
-          ? "bg-paper-bg/90 backdrop-blur-md shadow-sm py-0"
-          : "bg-transparent py-1",
+          ? "bg-paper-bg/90 backdrop-blur-md shadow-sm"
+          : "bg-transparent",
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +51,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-4">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.name}
@@ -76,7 +76,7 @@ export function Navbar() {
             ))}
             <Link
               to="/book"
-              className="bg-primary-gold text-white px-6 py-2.5 rounded-full font-medium hover:bg-primary-gold/90 transition-all hover:scale-105 hover:shadow-md"
+              className="bg-primary-gold text-white px-4 py-2 rounded-full font-medium hover:bg-primary-gold/90 transition-all hover:scale-105 hover:shadow-md"
             >
               Book Now
             </Link>
