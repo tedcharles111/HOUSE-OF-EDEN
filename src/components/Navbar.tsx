@@ -33,15 +33,15 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
+        "fixed top-0 w-full z-50 transition-all duration-300 h-28",
         isScrolled
           ? "bg-paper-bg/90 backdrop-blur-md shadow-sm"
           : "bg-transparent",
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+        <div className="flex justify-between items-center h-full">
+          <Link to="/" className="flex items-center -mt-16">
             <img
               src="https://freepressnews.com.ng/wp-content/uploads/2026/03/ChatGPT_Image_Mar_10__2026__03_58_07_PM-removebg-preview-1.png"
               alt="House Of Eden Logo"
