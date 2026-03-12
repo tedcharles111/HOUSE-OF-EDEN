@@ -45,7 +45,7 @@ export function Navbar() {
             <img
               src="https://freepressnews.com.ng/wp-content/uploads/2026/03/ChatGPT_Image_Mar_10__2026__03_58_07_PM-removebg-preview-1.png"
               alt="House Of Eden Logo"
-              className="w-24 h-24 object-contain"
+              className="w-40 h-40 object-contain"
               referrerPolicy="no-referrer"
             />
           </Link>
