@@ -1,141 +1,160 @@
-import { useState } from "react";
-import type { FormEvent } from "react";
-import { MessageCircle, X, Send } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { db, collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, doc, setDoc, updateDoc, getDoc } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
+import { MessageCircle, X, Send, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "../lib/utils";
 
 export function ChatWidget() {
+  const { user, profile, isAdmin } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hi! Welcome to House of Eden 🌿 How can we help you today?",
-      isBot: true,
-    },
-  ]);
-  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<any[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [chatId, setChatId] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleSend = (e: FormEvent) => {
+  useEffect(() => {
+    if (!user || isAdmin) return;
+
+    const initChat = async () => {
+      const id = user.uid;
+      setChatId(id);
+      
+      const chatDoc = await getDoc(doc(db, "chats", id));
+      if (!chatDoc.exists()) {
+        await setDoc(doc(db, "chats", id), {
+          userId: user.uid,
+          userName: profile?.displayName || user.displayName || "User",
+          lastMessage: "",
+          lastTimestamp: serverTimestamp(),
+          unreadCount: 0,
+        });
+      }
+    };
+
+    initChat();
+  }, [user, profile, isAdmin]);
+
+  useEffect(() => {
+    if (!chatId || !isOpen) return;
+
+    const q = query(
+      collection(db, "chats", chatId, "messages"),
+      orderBy("timestamp", "asc")
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setMessages(data);
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+      }, 100);
+    });
+    return () => unsubscribe();
+  }, [chatId, isOpen]);
+
+  const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!newMessage.trim() || !chatId || !user) return;
 
-    const newMsg = { id: Date.now(), text: input, isBot: false };
-    setMessages([...messages, newMsg]);
-    setInput("");
+    const messageData = {
+      senderId: user.uid,
+      senderName: profile?.displayName || user.displayName || "User",
+      text: newMessage,
+      timestamp: serverTimestamp(),
+      chatId: chatId,
+    };
 
-    // Simulate bot response
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          text: "Thanks for your message! Our team will get back to you shortly. Would you like to book an appointment?",
-          isBot: true,
-        },
-      ]);
-    }, 1000);
+    try {
+      await addDoc(collection(db, "chats", chatId, "messages"), messageData);
+      await updateDoc(doc(db, "chats", chatId), {
+        lastMessage: newMessage,
+        lastTimestamp: serverTimestamp(),
+      });
+      setNewMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
-  return (
-    <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className={cn(
-          "fixed bottom-6 right-6 w-14 h-14 bg-primary-gold rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform z-40",
-          isOpen && "hidden",
-        )}
-        aria-label="Open chat"
-      >
-        <MessageCircle size={28} />
-        <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 border-2 border-paper-bg rounded-full"></span>
-      </button>
+  if (isAdmin) return null;
 
+  return (
+    <div className="fixed bottom-6 right-6 z-[60]">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 w-[350px] h-[500px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 border border-light-gray/20"
+            className="mb-4 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-light-gray/20 overflow-hidden flex flex-col h-[500px]"
           >
             {/* Header */}
-            <div className="bg-heading-brown text-white p-4 flex justify-between items-center">
+            <div className="bg-primary-gold p-4 flex justify-between items-center text-white">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary-gold rounded-full flex items-center justify-center font-serif font-bold">
-                  HE
+                <div className="bg-white/20 p-2 rounded-full">
+                  <User size={18} />
                 </div>
                 <div>
-                  <h3 className="font-medium">House Of Eden</h3>
-                  <p className="text-xs text-white/70 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-green-500 rounded-full inline-block"></span>
-                    Online
-                  </p>
+                  <h3 className="font-medium">Live Support</h3>
+                  <p className="text-xs opacity-80">We're online to help</p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-white/80 hover:text-white"
-              >
+              <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-1 rounded-lg transition-colors">
                 <X size={20} />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 overflow-y-auto bg-paper-bg/30 flex flex-col gap-4">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-paper-bg/30">
+              {messages.length === 0 && (
+                <div className="text-center py-10 text-body-brown opacity-60 text-sm">
+                  <p>Hello! How can we help you today?</p>
+                </div>
+              )}
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={cn(
-                    "max-w-[80%] rounded-2xl px-4 py-2.5 text-sm",
-                    msg.isBot
-                      ? "bg-white border border-light-gray/20 text-body-brown self-start rounded-tl-sm"
-                      : "bg-primary-gold text-white self-end rounded-tr-sm",
-                  )}
+                  className={`flex ${msg.senderId === user?.uid ? "justify-end" : "justify-start"}`}
                 >
-                  {msg.text}
+                  <div
+                    className={`max-w-[80%] p-3 rounded-2xl text-sm ${
+                      msg.senderId === user?.uid
+                        ? "bg-primary-gold text-white rounded-tr-none"
+                        : "bg-white text-body-brown border border-light-gray/20 rounded-tl-none"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
                 </div>
               ))}
-              {/* Quick Replies */}
-              {messages.length === 1 && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {["Book Appointment", "Price List", "Working Hours"].map(
-                    (reply) => (
-                      <button
-                        key={reply}
-                        onClick={() => setInput(reply)}
-                        className="text-xs border border-primary-gold text-primary-gold px-3 py-1.5 rounded-full hover:bg-primary-gold hover:text-white transition-colors"
-                      >
-                        {reply}
-                      </button>
-                    ),
-                  )}
-                </div>
-              )}
             </div>
 
             {/* Input */}
-            <form
-              onSubmit={handleSend}
-              className="p-3 bg-white border-t border-light-gray/20 flex gap-2 items-center"
-            >
+            <form onSubmit={sendMessage} className="p-4 bg-white border-t border-light-gray/20 flex gap-2">
               <input
                 type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Type your message..."
-                className="flex-1 bg-paper-bg/50 border border-light-gray/30 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-primary-gold"
+                className="flex-1 bg-paper-bg border border-light-gray/20 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-gold/20"
               />
               <button
                 type="submit"
-                disabled={!input.trim()}
-                className="w-10 h-10 bg-primary-gold text-white rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary-gold/90 transition-colors shrink-0"
+                disabled={!newMessage.trim() || !user}
+                className="bg-primary-gold text-white p-2 rounded-xl hover:bg-primary-gold/90 transition-colors disabled:opacity-50"
               >
-                <Send size={18} className="ml-0.5" />
+                <Send size={18} />
               </button>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="bg-primary-gold text-white p-4 rounded-full shadow-lg hover:scale-110 transition-all hover:shadow-xl active:scale-95 flex items-center justify-center"
+      >
+        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+      </button>
+    </div>
   );
 }

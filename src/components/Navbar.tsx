@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Instagram, Facebook, Youtube } from "lucide-react";
+import { Menu, X, Instagram, Facebook, Youtube, Shield } from "lucide-react";
 import { cn } from "../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
+import { useAuth } from "../contexts/AuthContext";
 
 const NAV_LINKS = [
   { name: "Home", path: "/" },
@@ -17,6 +18,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,6 +76,15 @@ export function Navbar() {
                 />
               </Link>
             ))}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="flex items-center gap-1 text-sm font-medium text-primary-gold hover:text-primary-gold/80 transition-colors"
+              >
+                <Shield size={16} />
+                Admin
+              </Link>
+            )}
             <Link
               to="/book"
               className="bg-primary-gold text-white px-4 py-2 rounded-full font-medium hover:bg-primary-gold/90 transition-all hover:scale-105 hover:shadow-md"
@@ -117,6 +128,15 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-2 text-lg font-medium p-2 rounded-lg text-primary-gold hover:bg-primary-gold/10 transition-colors"
+                >
+                  <Shield size={20} />
+                  Admin Dashboard
+                </Link>
+              )}
               <div className="h-px bg-light-gray/30 my-2" />
               <div className="flex justify-center gap-6 py-4 text-leaf-brown">
                 <a

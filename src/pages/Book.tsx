@@ -14,6 +14,8 @@ import {
 import { cn } from "../lib/utils";
 import { format, addDays, startOfToday } from "date-fns";
 import { useLocation } from "react-router-dom";
+import { db, collection, addDoc, serverTimestamp } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
 
 const STEPS = ["Service", "Date & Time", "Details", "Payment", "Confirm"];
 
@@ -78,6 +80,9 @@ export function Book() {
   });
   const [paymentMethod, setPaymentMethod] = useState<"card" | "spa">("card");
 
+  const { user } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const serviceId = params.get("service");
@@ -90,8 +95,36 @@ export function Book() {
     }
   }, [location]);
 
-  const handleNext = () => {
-    if (currentStep < STEPS.length - 1) setCurrentStep((prev) => prev + 1);
+  const handleNext = async () => {
+    if (currentStep === STEPS.length - 2) {
+      // Final confirmation step
+      setIsSubmitting(true);
+      try {
+        const service = SERVICES.find((s) => s.id === selectedService);
+        await addDoc(collection(db, "bookings"), {
+          userId: user?.uid || "anonymous",
+          userName: formData.name,
+          userEmail: formData.email,
+          userPhone: formData.phone,
+          serviceName: service?.title || "Unknown Service",
+          serviceId: selectedService,
+          date: format(selectedDate, "yyyy-MM-dd"),
+          time: selectedTime,
+          notes: formData.notes,
+          paymentMethod,
+          status: "pending",
+          createdAt: serverTimestamp(),
+        });
+        setCurrentStep((prev) => prev + 1);
+      } catch (error) {
+        console.error("Error saving booking:", error);
+        alert("Failed to save booking. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else if (currentStep < STEPS.length - 1) {
+      setCurrentStep((prev) => prev + 1);
+    }
   };
 
   const handleBack = () => {
@@ -591,18 +624,22 @@ export function Book() {
 
                 <button
                   onClick={handleNext}
-                  disabled={!canProceed()}
+                  disabled={!canProceed() || isSubmitting}
                   className={cn(
                     "flex items-center gap-2 px-8 py-4 rounded-full font-bold transition-all text-lg",
-                    canProceed()
+                    canProceed() && !isSubmitting
                       ? "bg-primary-gold text-white hover:bg-primary-gold/90 hover:scale-105 shadow-xl shadow-primary-gold/20"
                       : "bg-light-gray/50 text-white cursor-not-allowed",
                   )}
                 >
-                  {currentStep === STEPS.length - 2
-                    ? "Confirm Booking"
-                    : "Continue"}{" "}
-                  <ChevronRight size={20} />
+                  {isSubmitting ? (
+                    "Processing..."
+                  ) : currentStep === STEPS.length - 2 ? (
+                    "Confirm Booking"
+                  ) : (
+                    "Continue"
+                  )}
+                  {!isSubmitting && <ChevronRight size={20} />}
                 </button>
               </div>
             )}
