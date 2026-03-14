@@ -18,7 +18,7 @@ async function testConnection() {
     }
   }
 }
-testConnection();
+// Removed automatic testConnection() call
 
 export { 
   signInWithPopup, 

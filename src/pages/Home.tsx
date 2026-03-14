@@ -67,10 +67,10 @@ const TESTIMONIALS = [
 ];
 
 const INSTAGRAM_POSTS = [
-  "https://picsum.photos/seed/ig1/400/400",
-  "https://picsum.photos/seed/ig2/400/400",
-  "https://picsum.photos/seed/ig3/400/400",
-  "https://picsum.photos/seed/ig4/400/400",
+  "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/27/81/9c/traditional-kaya-massage.jpg?w=1000&h=-1&s=1",
+  "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/be/09/7d/foot-reflexology.jpg?w=700&h=400&s=1",
+  "https://blog.withsplice.com/wp-content/uploads/2024/06/pexels-sora-shimazaki-5938595-1024x682.jpg",
+  "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/81/ee/da/soothing-and-relaxing.jpg?w=1000&h=-1&s=1",
 ];
 
 export function Home() {
