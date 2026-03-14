@@ -219,9 +219,10 @@ export function Home() {
             >
               <div className="aspect-square rounded-full overflow-hidden border-8 border-paper-bg shadow-xl relative z-10 max-w-md mx-auto lg:mx-0">
                 <img
-                  src="https://picsum.photos/seed/spa-philosophy/800/800"
+                  src="https://blog.withsplice.com/wp-content/uploads/2024/06/person-enjoying-scalp-massage-spa-1-1536x1025.jpg"
                   alt="Spa ambiance"
                   className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
                 />
               </div>
               <div className="absolute top-1/2 -translate-y-1/2 -right-12 w-64 h-64 bg-peach-accent rounded-full -z-0 blur-2xl opacity-60" />
