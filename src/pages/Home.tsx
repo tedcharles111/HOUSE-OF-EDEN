@@ -157,7 +157,7 @@ export function Home() {
           >
             <div className="absolute inset-0 bg-peach-accent/20 mix-blend-multiply z-10" />
             <img
-              src="https://static.wixstatic.com/media/11062b_f78c3007472047b7991f8740148aebd0~mv2.jpeg/v1/fill/w_296,h_296,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Image-place-holder.jpeg"
+              src="https://freepressnews.com.ng/wp-content/uploads/2026/03/ChatGPT-Image-Mar-14-2026-07_52_26-PM-1024x683.png"
               alt="Woman receiving spa treatment"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
