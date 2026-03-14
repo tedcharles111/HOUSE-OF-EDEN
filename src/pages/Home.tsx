@@ -496,7 +496,9 @@ export function Home() {
               </p>
             </div>
             <a
-              href="#"
+              href="https://www.instagram.com/houseofedenspa?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 bg-paper-bg px-6 py-3 rounded-full text-heading-brown font-medium hover:bg-peach-accent transition-colors"
             >
               <Instagram size={20} /> Follow Us
