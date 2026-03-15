@@ -392,33 +392,27 @@ export function Home() {
                 extracts to nourish and protect your skin daily.
               </p>
 
-              <div className="grid grid-cols-2 gap-6 mb-8">
-                <div className="group cursor-pointer">
-                  <div className="aspect-square rounded-2xl overflow-hidden mb-4 bg-paper-bg">
-                    <img
-                      src="https://picsum.photos/seed/product1/400/400"
-                      alt="Product"
-                      className="w-full h-full object-cover mix-blend-multiply transform group-hover:scale-110 transition-transform duration-500"
-                    />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                {[
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics10.jpg", name: "Radiance Serum" },
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics9.jpg", name: "Hydrating Mist" },
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics8.jpg", name: "Botanical Cream" },
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics3.jpg", name: "Nourishing Oil" },
+                ].map((product, i) => (
+                  <div key={i} className="group cursor-pointer">
+                    <div className="aspect-square rounded-2xl overflow-hidden mb-4 bg-paper-bg">
+                      <img
+                        src={product.src}
+                        alt={product.name}
+                        className="w-full h-full object-cover mix-blend-multiply transform group-hover:scale-110 transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <h4 className="font-bold text-heading-brown text-sm">
+                      {product.name}
+                    </h4>
                   </div>
-                  <h4 className="font-bold text-heading-brown">
-                    Radiance Serum
-                  </h4>
-                  <p className="text-primary-gold font-medium">NGN 25,000</p>
-                </div>
-                <div className="group cursor-pointer">
-                  <div className="aspect-square rounded-2xl overflow-hidden mb-4 bg-paper-bg">
-                    <img
-                      src="https://picsum.photos/seed/product2/400/400"
-                      alt="Product"
-                      className="w-full h-full object-cover mix-blend-multiply transform group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <h4 className="font-bold text-heading-brown">
-                    Hydrating Mist
-                  </h4>
-                  <p className="text-primary-gold font-medium">NGN 15,000</p>
-                </div>
+                ))}
               </div>
 
               <Link
