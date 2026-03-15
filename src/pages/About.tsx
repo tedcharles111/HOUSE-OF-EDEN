@@ -119,11 +119,11 @@ export function About() {
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10" />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row gap-12 items-center">
-            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary-gold shrink-0 shadow-2xl">
+            <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-primary-gold shrink-0 shadow-2xl bg-white/50">
               <img
                 src="https://freepressnews.com.ng/wp-content/uploads/2026/03/ChatGPT_Image_Mar_15__2026__04_40_08_PM-removebg-preview.png"
                 alt="Founder"
-                className="w-full h-full object-cover"
+                className="absolute -top-12 left-0 w-full h-[125%] object-contain"
                 referrerPolicy="no-referrer"
               />
             </div>
