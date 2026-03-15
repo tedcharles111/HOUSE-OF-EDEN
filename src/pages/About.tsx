@@ -3,10 +3,10 @@ import { Heart, Shield, Sparkles, Award, Clock, Users } from "lucide-react";
 
 const TEAM = [
   {
-    name: "Dr. Amina Bello",
+    name: "Naomi Osegie",
     role: "Lead Aesthetician & Founder",
     image: "https://picsum.photos/seed/staff1/400/400",
-    bio: "With over 15 years of experience in dermatology and aesthetic medicine, Dr. Bello founded House of Eden to bring world-class skincare to Lagos.",
+    bio: "With over 15 years of experience in dermatology and aesthetic medicine, Naomi founded House of Eden to bring world-class skincare to Lagos.",
   },
   {
     name: "Sarah Johnson",
@@ -141,7 +141,7 @@ export function About() {
               </p>
               <div>
                 <p className="font-serif font-bold text-primary-gold text-xl">
-                  Dr. Amina Bello
+                  Naomi Osegie
                 </p>
                 <p className="text-sm text-paper-bg/60 uppercase tracking-wider mt-1">
                   Founder & Lead Aesthetician
