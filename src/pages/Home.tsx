@@ -394,10 +394,10 @@ export function Home() {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                 {[
-                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics10.jpg", name: "Radiance Serum" },
-                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics9.jpg", name: "Hydrating Mist" },
-                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics8.jpg", name: "Botanical Cream" },
-                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics3.jpg", name: "Nourishing Oil" },
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics10.jpg", name: "Alpha Arbutln" },
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics9.jpg", name: "Pink Blossom" },
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics8.jpg", name: "Collagen" },
+                  { src: "https://freepressnews.com.ng/wp-content/uploads/2026/03/costimatics3.jpg", name: "SOOTHE + GLOW" },
                 ].map((product, i) => (
                   <div key={i} className="group cursor-pointer">
                     <div className="aspect-square rounded-2xl overflow-hidden mb-4 bg-paper-bg">
