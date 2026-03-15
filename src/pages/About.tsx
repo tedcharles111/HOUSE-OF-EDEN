@@ -32,7 +32,7 @@ const MILESTONES = [
   {
     year: "2020",
     title: "The Beginning",
-    desc: "House of Eden opened its doors in Victoria Island with a small team of 3 dedicated therapists.",
+    desc: "House of Eden opened its doors in Surulere with a small team of 3 dedicated therapists.",
   },
   {
     year: "2022",

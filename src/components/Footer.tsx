@@ -128,7 +128,7 @@ export function Footer() {
             <ul className="space-y-4 font-light text-paper-bg/80">
               <li className="flex items-start gap-3">
                 <MapPin size={20} className="text-primary-gold shrink-0 mt-1" />
-                <span>123 Luxury Avenue, Victoria Island, Lagos, Nigeria</span>
+                <span>16 Oyekan Road, off Ogunlana Drive, Surulere, Lagos, Nigeria 101283</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={20} className="text-primary-gold shrink-0" />

@@ -99,11 +99,11 @@ export function Contact() {
                       Visit Us
                     </h4>
                     <p className="text-body-brown/80 leading-relaxed text-lg">
-                      123 Luxury Avenue
+                      16 Oyekan Road, off Ogunlana Drive
                       <br />
-                      Victoria Island
+                      Surulere, Lagos
                       <br />
-                      Lagos, Nigeria
+                      Nigeria 101283
                     </p>
                   </div>
                 </div>
