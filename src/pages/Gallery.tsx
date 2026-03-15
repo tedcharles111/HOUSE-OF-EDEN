@@ -130,7 +130,7 @@ export function Gallery() {
               className="w-full h-full"
               frameBorder="0"
               allowTransparency={true}
-              allow="encrypted-media"
+              allow="autoplay; encrypted-media"
               title="Instagram Video"
             ></iframe>
           </motion.div>
