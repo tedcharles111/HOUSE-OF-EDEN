@@ -113,12 +113,27 @@ export function Gallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-body-brown/80 font-light leading-relaxed"
+            className="text-lg md:text-xl text-body-brown/80 font-light leading-relaxed mb-8"
           >
             Take a visual tour of our luxurious facilities and the serene
             environment we've meticulously created for your ultimate relaxation
             and rejuvenation.
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="relative h-[300px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl"
+          >
+            <iframe
+              src="https://www.instagram.com/reel/DSS3-n3APua/embed"
+              className="w-full h-full"
+              frameBorder="0"
+              allowTransparency={true}
+              allow="encrypted-media"
+              title="Instagram Video"
+            ></iframe>
+          </motion.div>
         </div>
       </section>
 
